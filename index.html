@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الجودة الذكية - مركز الفروانية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700;900&display=swap');
+        body { font-family: 'Noto Sans Arabic', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        :root {
+            --primary-color: #097834; 
+            --secondary-color: #C7AC25; 
+        }
+        
+        .bg-primary { background-color: var(--primary-color); }
+        .text-primary { color: var(--primary-color); }
+        .bg-secondary { background-color: var(--secondary-color); }
+        .text-secondary { color: var(--secondary-color); }
+        
+        .cat-btn.active {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+            border-color: var(--primary-color) !important;
+        }
+
+        .main-title {
+            font-weight: 900;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* تحسين استجابة الهيدر */
+        @media (max-width: 640px) {
+            .header-content { flex-direction: column; text-align: center; gap: 1rem; }
+            .association-info { align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 pb-24">
+
+    <!-- Header -->
+    <header class="bg-primary text-white p-6 rounded-b-[2.5rem] shadow-xl relative overflow-hidden">
+        <div class="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full"></div>
+        <div class="absolute top-20 -right-10 w-24 h-24 bg-secondary/10 rounded-full"></div>
+
+        <div class="relative z-10">
+            <!-- Top Section -->
+            <div class="flex items-center justify-between mb-8 header-content">
+                <div class="flex items-center gap-4 association-info">
+                    <div class="bg-white p-1 rounded-xl shadow-lg w-16 h-16 flex items-center justify-center overflow-hidden border-2 border-secondary/20">
+                        <img id="logoImg" src="https://i.ibb.co/r2LcLwmn/logo.png" 
+                             onerror="this.src='https://ui-avatars.com/api/?name=تراث&background=097834&color=fff'" 
+                             alt="شعار جمعية إحياء التراث" 
+                             class="w-full h-full object-contain p-1">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm md:text-base font-bold text-white leading-tight">جمعية إحياء التراث الإسلامي</span>
+                        <span class="text-secondary text-xs md:text-sm font-bold mt-1">مركز محافظة الفروانية</span>
+                    </div>
+                </div>
+
+                <div class="hidden sm:flex bg-white/10 p-3 rounded-full border border-white/20">
+                    <i class="fas fa-shield-halved text-secondary text-xl"></i>
+                </div>
+            </div>
+
+            <!-- Center Title -->
+            <div class="text-center mb-8">
+                <h1 class="main-title text-2xl md:text-4xl text-white tracking-tight">
+                    البوابة الذكية لضبط الجودة
+                </h1>
+                <div class="w-24 h-1 bg-secondary mx-auto mt-2 rounded-full shadow-sm"></div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="relative max-w-2xl mx-auto">
+                <input type="text" id="searchInput" onkeyup="filterFiles()" placeholder="ابحث عن نموذج أو وثيقة..." 
+                    class="w-full p-4 pr-12 rounded-2xl border-none text-slate-800 shadow-inner focus:ring-2 focus:ring-secondary outline-none placeholder:text-slate-400">
+                <i class="fas fa-search absolute right-4 top-4 text-slate-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Categories -->
+    <div class="p-4 flex gap-2 overflow-x-auto no-scrollbar py-6 max-w-4xl mx-auto">
+        <button onclick="filterCategory('الكل')" class="cat-btn active bg-primary text-white px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-md transition border border-transparent">الكل</button>
+        <button onclick="filterCategory('النماذج العامة')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm transition border border-slate-100">النماذج العامة</button>
+        <button onclick="filterCategory('التوصيفات الوظيفية')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm transition border border-slate-100">التوصيفات الوظيفية</button>
+        <button onclick="filterCategory('توصيفات الاقسام')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm transition border border-slate-100">توصيفات الاقسام</button>
+        <button onclick="filterCategory('خرائط التدفق')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm transition border border-slate-100">خرائط التدفق</button>
+        <button onclick="filterCategory('عمليات التدقيق الداخلي')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm transition border border-slate-100">عمليات التدقيق الداخلي</button>
+    </div>
+
+    <!-- Content Area -->
+    <main class="px-4 max-w-4xl mx-auto min-h-[400px]" id="filesContainer">
+        <!-- سيتم توليد العناصر هنا -->
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex justify-around p-4 rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-50">
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center text-primary group">
+            <i class="fas fa-house text-xl mb-1 group-active:scale-90 transition"></i>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </button>
+        <div class="flex flex-col items-center text-slate-400">
+            <i class="fas fa-landmark text-xl mb-1"></i>
+            <span class="text-[10px] font-bold">الفروانية</span>
+        </div>
+        <div class="flex flex-col items-center text-slate-400">
+            <i class="fas fa-circle-info text-xl mb-1"></i>
+            <span class="text-[10px] font-bold">عن النظام</span>
+        </div>
+    </nav>
+
+    <script>
+        // قاعدة البيانات التجريبية
+        const filesData = [
+            { id: 1, name: 'نموذج تقييم الأداء السنوي', category: 'النماذج العامة', date: '2024-03-01', url: '#' },
+            { id: 2, name: 'توصيف وظيفة مدير إداري', category: 'التوصيفات الوظيفية', date: '2024-01-15', url: '#' },
+            { id: 3, name: 'توصيف قسم الموارد البشرية', category: 'توصيفات الاقسام', date: '2024-02-20', url: '#' },
+            { id: 4, name: 'خريطة تدفق إجراءات المشتريات', category: 'خرائط التدفق', date: '2024-03-10', url: '#' },
+            { id: 5, name: 'تقرير التدقيق الداخلي ربع السنوي', category: 'عمليات التدقيق الداخلي', date: '2024-03-12', url: '#' },
+            { id: 6, name: 'نموذج طلب إجازة', category: 'النماذج العامة', date: '2024-03-05', url: '#' },
+            { id: 7, name: 'توصيف وظيفة محاسب', category: 'التوصيفات الوظيفية', date: '2024-03-02', url: '#' },
+            { id: 8, name: 'خريطة تدفق استقبال المعاملات', category: 'خرائط التدفق', date: '2024-03-01', url: '#' },
+            { id: 9, name: 'خطة التدقيق السنوية', category: 'عمليات التدقيق الداخلي', date: '2024-03-15', url: '#' },
+            { id: 10, name: 'توصيف القسم المالي', category: 'توصيفات الاقسام', date: '2024-03-10', url: '#' }
+        ];
+
+        let currentCategory = 'الكل';
+
+        function renderFiles() {
+            const container = document.getElementById('filesContainer');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            container.innerHTML = '';
+            
+            const filtered = filesData.filter(f => {
+                const matchesSearch = f.name.includes(searchTerm);
+                const matchesCat = currentCategory === 'الكل' || f.category === currentCategory;
+                return matchesSearch && matchesCat;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-20 text-slate-400">
+                        <i class="fas fa-folder-open text-4xl mb-4 opacity-20"></i>
+                        <p>لا توجد ملفات تطابق بحثك</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(file => {
+                const card = `
+                    <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm mb-4 flex items-center justify-between transition-all hover:shadow-md active:scale-[0.98]">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-green-50 w-12 h-12 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-file-pdf text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-sm">${file.name}</h3>
+                                <div class="flex gap-2 items-center mt-1">
+                                    <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-bold">${file.category}</span>
+                                    <span class="text-[10px] text-slate-400 font-bold">${file.date}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="${file.url}" target="_blank" class="bg-secondary text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-yellow-100 hover:scale-110 transition">
+                            <i class="fas fa-eye text-xs"></i>
+                        </a>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white', 'active');
+                btn.classList.add('bg-white', 'text-slate-600');
+                if(btn.innerText.trim() === cat.trim()) {
+                    btn.classList.add('active', 'bg-primary', 'text-white');
+                    btn.classList.remove('bg-white', 'text-slate-600');
+                }
+            });
+            renderFiles();
+        }
+
+        function filterFiles() {
+            renderFiles();
+        }
+
+        window.onload = renderFiles;
+    </script>
+</body>
+</html>
