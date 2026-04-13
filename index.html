@@ -8,192 +8,177 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700;900&display=swap');
-        body { font-family: 'Noto Sans Arabic', sans-serif; }
+        body { font-family: 'Noto Sans Arabic', sans-serif; overflow-x: hidden; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; scroll-behavior: smooth; }
         
-        :root {
-            --primary-color: #097834; 
-            --secondary-color: #C7AC25; 
-        }
-        
+        :root { --primary-color: #097834; --secondary-color: #C7AC25; }
         .bg-primary { background-color: var(--primary-color); }
-        .text-primary { color: var(--primary-color); }
         .bg-secondary { background-color: var(--secondary-color); }
-        .text-secondary { color: var(--secondary-color); }
+        .cat-btn.active { background-color: var(--primary-color) !important; color: white !important; }
         
-        .cat-btn.active {
-            background-color: var(--primary-color) !important;
-            color: white !important;
-            border-color: var(--primary-color) !important;
+        .nav-scroll-btn {
+            background: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.3s;
+            border: 1px solid #eee;
         }
-
-        .main-title {
-            font-weight: 900;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        /* تحسين استجابة الهيدر */
-        @media (max-width: 640px) {
-            .header-content { flex-direction: column; text-align: center; gap: 1rem; }
-            .association-info { align-items: center; text-align: center; }
-        }
+        .nav-scroll-btn:hover { background: #f8f8f8; transform: scale(1.1); }
     </style>
 </head>
-<body class="bg-slate-50 pb-24">
+<body class="bg-slate-50 pb-24 text-right">
 
-    <!-- Header -->
     <header class="bg-primary text-white p-6 rounded-b-[2.5rem] shadow-xl relative overflow-hidden">
-        <div class="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full"></div>
-        <div class="absolute top-20 -right-10 w-24 h-24 bg-secondary/10 rounded-full"></div>
-
         <div class="relative z-10">
-            <!-- Top Section -->
-            <div class="flex items-center justify-between mb-8 header-content">
-                <div class="flex items-center gap-4 association-info">
-                    <div class="bg-white p-1 rounded-xl shadow-lg w-16 h-16 flex items-center justify-center overflow-hidden border-2 border-secondary/20">
-                        <img id="logoImg" src="https://i.ibb.co/r2LcLwmn/logo.png" 
-                             onerror="this.src='https://ui-avatars.com/api/?name=تراث&background=097834&color=fff'" 
-                             alt="شعار جمعية إحياء التراث" 
-                             class="w-full h-full object-contain p-1">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-4">
+                    <div class="bg-white p-1 rounded-xl w-16 h-16 flex items-center justify-center overflow-hidden">
+                        <img src="https://i.ibb.co/r2LcLwmn/logo.png" onerror="this.src='https://ui-avatars.com/api/?name=تراث&background=097834&color=fff'" class="w-full h-full object-contain">
                     </div>
-                    <div class="flex flex-col">
-                        <span class="text-sm md:text-base font-bold text-white leading-tight">جمعية إحياء التراث الإسلامي</span>
-                        <span class="text-secondary text-xs md:text-sm font-bold mt-1">مركز محافظة الفروانية</span>
+                    <div class="flex flex-col text-right">
+                        <span class="text-sm font-bold">جمعية إحياء التراث الإسلامي</span>
+                        <span class="text-[#C7AC25] text-xs font-bold">مركز محافظة الفروانية</span>
                     </div>
                 </div>
-
-                <div class="hidden sm:flex bg-white/10 p-3 rounded-full border border-white/20">
-                    <i class="fas fa-shield-halved text-secondary text-xl"></i>
-                </div>
-            </div>
-
-            <!-- Center Title -->
-            <div class="text-center mb-8">
-                <h1 class="main-title text-2xl md:text-4xl text-white tracking-tight">
-                    البوابة الذكية لضبط الجودة
-                </h1>
-                <div class="w-24 h-1 bg-secondary mx-auto mt-2 rounded-full shadow-sm"></div>
             </div>
             
-            <!-- Search Bar -->
+            <div class="text-center mb-8">
+                <h1 class="font-black text-2xl md:text-4xl text-white">البوابة الذكية لضبط الجودة</h1>
+                <div class="w-24 h-1 bg-[#C7AC25] mx-auto mt-2 rounded-full shadow-sm"></div>
+                <p class="text-[10px] md:text-xs text-white/80 mt-2 font-bold tracking-widest">إعداد / إبراهيم خليل</p>
+            </div>
+
             <div class="relative max-w-2xl mx-auto">
-                <input type="text" id="searchInput" onkeyup="filterFiles()" placeholder="ابحث عن نموذج أو وثيقة..." 
-                    class="w-full p-4 pr-12 rounded-2xl border-none text-slate-800 shadow-inner focus:ring-2 focus:ring-secondary outline-none placeholder:text-slate-400">
+                <input type="text" id="searchInput" onkeyup="filterFiles()" placeholder="ابحث عن نموذج، قسم، أو موظف..." class="w-full p-4 pr-12 rounded-2xl border-none text-slate-800 outline-none shadow-inner">
                 <i class="fas fa-search absolute right-4 top-4 text-slate-400"></i>
             </div>
         </div>
     </header>
 
-    <!-- Categories -->
-    <div class="p-4 flex gap-2 overflow-x-auto no-scrollbar py-6 max-w-4xl mx-auto">
-        <button onclick="filterCategory('الكل')" class="cat-btn active bg-primary text-white px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-md transition border border-transparent">الكل</button>
-        <button onclick="filterCategory('النماذج العامة')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm transition border border-slate-100">النماذج العامة</button>
-        <button onclick="filterCategory('التوصيفات الوظيفية')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm transition border border-slate-100">التوصيفات الوظيفية</button>
-        <button onclick="filterCategory('توصيفات الاقسام')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm transition border border-slate-100">توصيفات الاقسام</button>
-        <button onclick="filterCategory('خرائط التدفق')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm transition border border-slate-100">خرائط التدفق</button>
-        <button onclick="filterCategory('عمليات التدقيق الداخلي')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm transition border border-slate-100">عمليات التدقيق الداخلي</button>
+    <div class="relative max-w-4xl mx-auto flex items-center px-2 py-6">
+        <button onclick="scrollCats('right')" class="nav-scroll-btn ml-2" id="btnRight">
+            <i class="fas fa-chevron-right text-primary text-sm"></i>
+        </button>
+
+        <div id="catContainer" class="flex gap-2 overflow-x-auto no-scrollbar scroll-smooth flex-grow">
+            <button onclick="filterCategory('النماذج العامة')" class="cat-btn active bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm border border-slate-100">النماذج العامة</button>
+            <button onclick="filterCategory('توصيفات الاقسام')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm border border-slate-100">توصيفات الاقسام</button>
+            <button onclick="filterCategory('التوصيفات الوظيفية')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm border border-slate-100">التوصيفات الوظيفية</button>
+            <button onclick="filterCategory('خطط الاقسام')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm border border-slate-100">خطط الاقسام</button>
+            <button onclick="filterCategory('عمليات التدقيق الداخلي')" class="cat-btn bg-white text-slate-600 px-6 py-2 rounded-full whitespace-nowrap text-sm font-bold shadow-sm border border-slate-100">عمليات التدقيق الداخلي</button>
+        </div>
+
+        <button onclick="scrollCats('left')" class="nav-scroll-btn mr-2" id="btnLeft">
+            <i class="fas fa-chevron-left text-primary text-sm"></i>
+        </button>
     </div>
 
-    <!-- Content Area -->
-    <main class="px-4 max-w-4xl mx-auto min-h-[400px]" id="filesContainer">
-        <!-- سيتم توليد العناصر هنا -->
-    </main>
-
-    <!-- Bottom Navigation -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex justify-around p-4 rounded-t-3xl shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-50">
-        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center text-primary group">
-            <i class="fas fa-house text-xl mb-1 group-active:scale-90 transition"></i>
-            <span class="text-[10px] font-bold">الرئيسية</span>
-        </button>
-        <div class="flex flex-col items-center text-slate-400">
-            <i class="fas fa-landmark text-xl mb-1"></i>
-            <span class="text-[10px] font-bold">الفروانية</span>
-        </div>
-        <div class="flex flex-col items-center text-slate-400">
-            <i class="fas fa-circle-info text-xl mb-1"></i>
-            <span class="text-[10px] font-bold">عن النظام</span>
-        </div>
-    </nav>
+    <main class="px-4 max-w-4xl mx-auto" id="filesContainer"></main>
 
     <script>
-        // قاعدة البيانات التجريبية
+        function scrollCats(direction) {
+            const container = document.getElementById('catContainer');
+            const scrollAmount = 200;
+            if (direction === 'left') {
+                container.scrollLeft -= scrollAmount;
+            } else {
+                container.scrollLeft += scrollAmount;
+            }
+        }
+
         const filesData = [
-            { id: 1, name: 'نموذج تقييم الأداء السنوي', category: 'النماذج العامة', date: '2024-03-01', url: '#' },
-            { id: 2, name: 'توصيف وظيفة مدير إداري', category: 'التوصيفات الوظيفية', date: '2024-01-15', url: '#' },
-            { id: 3, name: 'توصيف قسم الموارد البشرية', category: 'توصيفات الاقسام', date: '2024-02-20', url: '#' },
-            { id: 4, name: 'خريطة تدفق إجراءات المشتريات', category: 'خرائط التدفق', date: '2024-03-10', url: '#' },
-            { id: 5, name: 'تقرير التدقيق الداخلي ربع السنوي', category: 'عمليات التدقيق الداخلي', date: '2024-03-12', url: '#' },
-            { id: 6, name: 'نموذج طلب إجازة', category: 'النماذج العامة', date: '2024-03-05', url: '#' },
-            { id: 7, name: 'توصيف وظيفة محاسب', category: 'التوصيفات الوظيفية', date: '2024-03-02', url: '#' },
-            { id: 8, name: 'خريطة تدفق استقبال المعاملات', category: 'خرائط التدفق', date: '2024-03-01', url: '#' },
-            { id: 9, name: 'خطة التدقيق السنوية', category: 'عمليات التدقيق الداخلي', date: '2024-03-15', url: '#' },
-            { id: 10, name: 'توصيف القسم المالي', category: 'توصيفات الاقسام', date: '2024-03-10', url: '#' }
+            // النماذج العامة
+            { id: 1, name: 'نموذج إجراء تصحيحي', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/19YGZE9LfgFalTXkKlH6nU_y1Ldkln2eZ/preview?usp=drive_link' },
+            { id: 2, name: 'نموذج استلام عام', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/1Mlx0kH1bg4i4EULryCnDS74KNuhUz0vN/preview?usp=drive_link' },
+            { id: 3, name: 'نموذج استلام عهدة', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/1RzScOOp_dNe3lQPmQFvlSGTAonQFimSx/preview?usp=drive_link' },
+            { id: 4, name: 'نموذج استلام وتسليم', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/17HwD5iAfdxhhs5X5Fy3S62i5Xuu13V0g/preview?usp=drive_link' },
+            { id: 5, name: 'نموذج اقتراح', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/1iMjbsgiSByWXj-6_leblk59t_Ccz8YcS/preview?usp=drive_link' },
+            { id: 9, name: 'نموذج ترشيح دورة', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/1Q8bhOsSgI2B8KAnDwEYPZd1nugo3pkmv/preview?usp=drive_link' },
+            { id: 10, name: 'نموذج تعميم داخلي', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/1qpLNGsm3HLb7Fs0kLMSHytNYCxto_W78/preview?usp=drive_link' },
+            { id: 11, name: 'نموذج تقييم اداء الموظفين', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/19IHibkVK6TE5y4SjJDFKQuwCZuNWKcSo/preview?usp=drive_link' },
+            { id: 12, name: 'نموذج تكليف بمهمة', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/1V3Sv1ALIDmD_k5kbcyh3krDWDODIiiHT/preview?usp=drive_link' },
+            { id: 13, name: 'نموذج توجيه', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/1Trh18QyuRtHozB-GtX3ltVGBpr6oQ3gF/preview?usp=drive_link' },
+            { id: 14, name: 'نموذج صيانة', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/1lgMODb0LNBT0YdsH7fgO9yKo00tp8Wub/preview?usp=drive_link' },
+            { id: 15, name: 'نموذج طلب استبيان', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/149IufCNTiX98jwN9MbSAIMVK1zHxBsXN/preview?usp=drive_link' },
+            { id: 16, name: 'نموذج عدم مطابقة', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/111U-r3p2NnEDvKC7iv41HSSEIcroD1id/preview?usp=drive_link' },
+            { id: 17, name: 'نموذج كتاب رسمي داخلي', category: 'النماذج العامة', url: 'https://drive.google.com/file/d/1zj4HDzHk20xZNlxw9xGZ4eIOVVmXA7o2/preview?usp=drive_link' },
+
+            // توصيفات الأقسام (جديد)
+            { id: 201, name: 'توصيف قسم الارشيف', category: 'توصيفات الاقسام', url: 'https://drive.google.com/file/d/1PMR_pQXy2782_owykLLQUumvCAL1_1Dx/preview?usp=drive_link' },
+            { id: 202, name: 'توصيف قسم الاستقبال', category: 'توصيفات الاقسام', url: 'https://drive.google.com/file/d/1gjwxPuIBKpjsNzIrhbkCy0xXAjMZsOci/preview?usp=drive_link' },
+            { id: 203, name: 'توصيف قسم الاستقطاعات', category: 'توصيفات الاقسام', url: 'https://drive.google.com/file/d/1NRkeOxSouxSdz29d_hkVodeAeWtpvbL1/preview?usp=drive_link' },
+            { id: 204, name: 'توصيف قسم الاشراف الاداري', category: 'توصيفات الاقسام', url: 'https://drive.google.com/file/d/1Tg9kNeFKVc9HkpCcqkEydOXeYkPuhUGQ/preview?usp=drive_link' },
+            { id: 205, name: 'توصيف قسم الاشراف الفني', category: 'توصيفات الاقسام', url: 'https://drive.google.com/file/d/1Xn2HtcIggFHJroEwvdSsgZNcs3nsn3EA/preview?usp=drive_link' },
+            { id: 206, name: 'توصيف قسم الاعلامية والتسويق', category: 'توصيفات الاقسام', url: 'https://drive.google.com/file/d/1cB4Wm-wuNJszTPGArho-U11zIpkiTbRB/preview?usp=drive_link' },
+            { id: 207, name: 'توصيف قسم ضبط الجودة', category: 'توصيفات الاقسام', url: 'https://drive.google.com/file/d/1-YAlN57rdUp44uq73mLoYa6eCrbguUxf/preview?usp=drive_link' },
+            { id: 208, name: 'توصيف قسم الدعم الفني', category: 'توصيفات الاقسام', url: 'https://drive.google.com/file/d/1JQZ9yR9DUKz5BRRN-mci685tZD6Umvbj/preview?usp=drive_link' },
+            { id: 209, name: 'توصيف قسم الكلمة الطيبة واللجنة العلمية', category: 'توصيفات الاقسام', url: 'https://drive.google.com/file/d/1C2E7PS0stj3-hU1ANJV97NVB34u9CAHx/preview?usp=drive_link' },
+            { id: 210, name: 'توصيف قسم المشاريع', category: 'توصيفات الاقسام', url: 'https://drive.google.com/file/d/1A5Mbc7kL77u3CsJ2YOZ8lHztUFoAJWTA/preview?usp=drive_link' },
+
+            // التوصيفات الوظيفية للموظفين
+            { id: 101, name: 'خالد صالح - قسم الارشيف', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1phHC47vOb0vubGiJ-8VXpiwrABx8EVYt/preview?usp=drive_link' },
+            { id: 102, name: 'احمد جبار - قسم الاستقبال', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1sllQ9c5YwuctIjnJQ7F3qz1gLN2THybG/preview?usp=drive_link' },
+            { id: 103, name: 'رسام عبدالله - قسم الاستقبال', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1aOwjik18D_NQQWHURKHqyfiMzp87kL5d/preview?usp=drive_link' },
+            { id: 104, name: 'عبدالله سالم - قسم الاستقبال', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1qAPD2RZrkeHI4kvX8h6XMwSoq0wdO-pK/preview?usp=drive_link' },
+            { id: 105, name: 'لافي هجرس - قسم الاستقبال', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1nRPc7vs3EikT3qSWxgwwV60PdjO-UwV_/preview?usp=drive_link' },
+            { id: 106, name: 'محمد عمر سالمين - قسم الاستقبال', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1sEQGrFAtyWNN1JC9z2zvyvL2-qlpF6nx/preview?usp=drive_link' },
+            { id: 107, name: 'مساعد جمعة - قسم الاستقبال', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1NjHumNnkPkhjsssDDEtDopJeS_RwHddK/preview?usp=drive_link' },
+            { id: 108, name: 'علاء حسين - قسم الاستقطاعات', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1vp1PmUsahPlAXDxSVOg9jsooJx1vYaRQ/preview?usp=drive_link' },
+            { id: 109, name: 'محمد زين العابدين - قسم الاستقطاعات', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1nkTJP3MhkOWUsWSayQ1C1GRyxV7ZdAoJ/preview?usp=drive_link' },
+            { id: 110, name: 'عقاب الشمري - قسم الاشراف الاداري', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/10L4PeViYuFdwC8fbPh1JY7W00uNko0LY/preview?usp=drive_link' },
+            { id: 111, name: 'وليد الفقيه - قسم الاشراف الفني', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1jFhyAjG-z8SaHVYpokifdfKE8vYJCfAk/preview?usp=drive_link' },
+            { id: 112, name: 'سعود ماجد - قسم الاعلامية والتسويق', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1MJ0KLZjilTy6JgR-_mFSOhWmEhvYOlp5/preview?usp=drive_link' },
+            { id: 113, name: 'إبراهيم خليل - قسم ضبط الجودة', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1dv92JhpnNG8ObUpJxfyW0OgJPQDOKrV_/preview?usp=drive_link' },
+            { id: 114, name: 'وليد الهتاري - قسم الدعم الفني', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1_vV0WH2PxgPqyTMEVAyY35HP8bCaw82N/preview?usp=drive_link' },
+            { id: 115, name: 'موسى حسانين - قسم الكلمة الطيبة', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/10rIN2a87Evf1VzNC6-Y4e1LVfgCwNPti/preview?usp=drive_link' },
+            { id: 116, name: 'عبدالرشيد بلوشي - قسم الكلمة الطيبة', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1RLnf9m9eRp6HoeJFc1za7t1V7Jm4mVFr/preview?usp=drive_link' },
+            { id: 117, name: 'محمد ناظر خان - قسم الكلمة الطيبة', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/11GC25_xRQ1t0pKy2A9oTMIj0FOkQ2Kzf/preview?usp=drive_link' },
+            { id: 118, name: 'عصام ابراهيم - قسم الكلمة الطيبة', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1IDJrCQzUJwJ3hD7biydyFEQ_V6THhvI8/preview?usp=drive_link' },
+            { id: 119, name: 'مشعل صالح - قسم المشاريع', category: 'التوصيفات الوظيفية', url: 'https://drive.google.com/file/d/1i_AzTN2WRKFrgWvDWNkTdkQlvq0cGTtp/preview?usp=drive_link' },
+
+            // خطط
+            { id: 6, name: 'نموذج الخطة التشغيلية', category: 'خطط الاقسام', url: 'https://drive.google.com/file/d/1Ac5uUBtfXOyM4QUxsCaNjbZvzMupSdyf/preview?usp=drive_link' },
+            { id: 8, name: 'نموذج التدقيق الداخلي', category: 'عمليات التدقيق الداخلي', url: 'https://drive.google.com/file/d/1RqhHUVVoPvfPCayX1uwvGUpNhsebkfm0/preview?usp=drive_link' }
         ];
 
-        let currentCategory = 'الكل';
+        let currentCategory = 'النماذج العامة';
 
         function renderFiles() {
             const container = document.getElementById('filesContainer');
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             container.innerHTML = '';
+            const filtered = filesData.filter(f => (f.category === currentCategory) && (f.name.toLowerCase().includes(searchTerm)));
             
-            const filtered = filesData.filter(f => {
-                const matchesSearch = f.name.includes(searchTerm);
-                const matchesCat = currentCategory === 'الكل' || f.category === currentCategory;
-                return matchesSearch && matchesCat;
-            });
-
-            if (filtered.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-20 text-slate-400">
-                        <i class="fas fa-folder-open text-4xl mb-4 opacity-20"></i>
-                        <p>لا توجد ملفات تطابق بحثك</p>
-                    </div>
-                `;
+            if(filtered.length === 0) {
+                container.innerHTML = '<div class="text-center py-10 text-slate-400">لا توجد نتائج بحث مطابقة</div>';
                 return;
             }
 
             filtered.forEach(file => {
-                const card = `
-                    <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm mb-4 flex items-center justify-between transition-all hover:shadow-md active:scale-[0.98]">
+                container.innerHTML += `
+                    <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm mb-4 flex items-center justify-between transition hover:shadow-md">
                         <div class="flex items-center gap-4">
-                            <div class="bg-green-50 w-12 h-12 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-file-pdf text-primary text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-slate-800 text-sm">${file.name}</h3>
-                                <div class="flex gap-2 items-center mt-1">
-                                    <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-bold">${file.category}</span>
-                                    <span class="text-[10px] text-slate-400 font-bold">${file.date}</span>
-                                </div>
-                            </div>
+                            <div class="bg-green-50 w-12 h-12 rounded-xl flex items-center justify-center"><i class="fas fa-file-pdf text-[#097834] text-xl"></i></div>
+                            <div class="text-right"><h3 class="font-bold text-slate-800 text-sm">${file.name}</h3><span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded font-bold">${file.category}</span></div>
                         </div>
-                        <a href="${file.url}" target="_blank" class="bg-secondary text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-yellow-100 hover:scale-110 transition">
-                            <i class="fas fa-eye text-xs"></i>
-                        </a>
-                    </div>
-                `;
-                container.innerHTML += card;
+                        <a href="${file.url}" target="_blank" class="bg-[#C7AC25] text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-lg transition hover:scale-110"><i class="fas fa-eye text-xs"></i></a>
+                    </div>`;
             });
         }
-
         function filterCategory(cat) {
             currentCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                btn.classList.remove('bg-primary', 'text-white', 'active');
-                btn.classList.add('bg-white', 'text-slate-600');
-                if(btn.innerText.trim() === cat.trim()) {
-                    btn.classList.add('active', 'bg-primary', 'text-white');
-                    btn.classList.remove('bg-white', 'text-slate-600');
-                }
-            });
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.toggle('active', btn.innerText.trim() === cat));
             renderFiles();
         }
-
-        function filterFiles() {
-            renderFiles();
-        }
-
+        function filterFiles() { renderFiles(); }
         window.onload = renderFiles;
     </script>
 </body>
